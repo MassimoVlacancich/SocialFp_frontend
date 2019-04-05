@@ -1,20 +1,146 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<!-- <button (click)="sendReportRequest()" >GET EMAIL REPORT</button>
+<button (click)="test()" >TEST BACKEND</button> -->
 
+
+<div class="container-fluid h-100">
+
+  <div class="row h-100">
+    
+    <div class="col-sm-12 col-md-4 main-section">
+  
+      <div class="center-block">
+        <div class="title">
+          <img src="../assets/images/logo.png"/>
+          <h1>Welcome <br/> to SocialFP</h1>
+        </div>
+          
+  
+        <hr align="center" width="30%">
+  
+        <div class="row" style="margin-top: 30px">
+          
+          <form [formGroup]="reportRequestForm" (ngSubmit)="submitReportRequest($event)" class="report-request">
+  
+            <div class="form-group">
+  
+              <mat-form-field class="example-full-width">
+                <input matInput type="email" id="inputEmail" formControlName="email" 
+                [ngClass]="(email.untouched || email.valid) ? 'valid' : 'invalid'"  
+                placeholder="Enter email" (click)="resetSubmitButton()"
+                >
+                <mat-icon matSuffix>email</mat-icon>
+                <mat-error *ngIf="email.touched && email.errors?.email">
+                  Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="email.touched && email.errors?.required">
+                  Email is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+  
+            </div>
+  
+            <div class="form-group">
+              <mat-form-field (click)="resetSubmitButton()" >
+                <mat-label>Select a company</mat-label>
+                <mat-select formControlName="company" required>
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let company of companies" [value]="company">
+                    {{company.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>trending_up</mat-icon>
+                <mat-error *ngIf="company.touched && company.errors?.required">Please choose a company</mat-error>
+                <mat-hint>{{company.value?.ticker}}</mat-hint>
+              </mat-form-field>
+            </div>
+  
+            <div class="form-group">
+                <div class="btn-group-horizontal" style="text-align: center; margin-top: 30px">
+                  <button mat-raised-button type="submit"  [disabled]="reportRequested"
+                  [ngClass]="reportRequested ? 'report-button-clicked' : 'report-button-fresh'">{{submitText}}</button>
+                </div>
+            </div>
+  
+          </form>
+  
+        </div>        
+      </div>
+      
+    </div>
+  
+    <div class="col-sm col-md about-section">
+
+      <div class="wrapper">
+        <div class="about-square">
+          
+          <div class="content">
+            <h1>What is SocialFP?</h1>
+            <hr>
+
+            <div class="paragraphs">
+              <div class="row paragraph">
+                <div class="span4 left">
+                  <img src="../assets/images/about/chat.png"/>
+                  <p>Social <b>F</b>inancial <b>P</b>redictor is a financial tool that makes use of social networks information to discover
+                    correlations between stock price movements and human sentiment. Twitter posts and SeekingAlpha provide both generic and 
+                    specific opinions towards a certain company.
+                  </p>
+                </div>
+              </div>
+
+              <div class="row paragraph">
+                <div class="span4 right">
+                  <img src="../assets/images/about/fundament_tech.png"/>
+                  <p>Social Analysis has to be accompained by traditional techniques such as Technical and Fundamental analysis,
+                    instead of being considered on its own; the intent is to incorporate investors emotions together with their strategies
+                    in taking a considerate trading decision.
+                  </p>
+                </div>
+              </div>
+
+              <div class="row paragraph">
+                <div class="span4 left">
+                  <img src="../assets/images/about/report.png"/>
+                  <p>The gathered information is processed to generate a sentiment movement index, Facebook AI Prophet is used to predict
+                    the future sentiment trend, which depending on the correlation level can provide a strong prediction. The final report
+                    is computed and sent to the user in about 30 seconds.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      
+    </div> 
+    
+  </div>
+
+</div>
+
+
+<div class="container footer-container">
+    <div class="row footer-row">
+        <div class="footer">
+            <div class="row text-center flex-row">
+
+                <a target="_blank" href="https://www.linkedin.com/in/massimovlacancich/">
+                  <img class="img-responsive" src="../assets/images/socials/linkedin.png">
+                </a>
+                
+                <a target="_blank" href="mailto:mv607@york.ac.uk">
+                  <img class="img-responsive" style="margin-left: 30px; margin-right: 30px" src="../assets/images/socials/email.png">
+                </a>
+
+                <a target="_blank" href="https://github.com/MassimoVlacancich">
+                  <img class="img-responsive" src="../assets/images/socials/github.png">
+                </a>
+                
+            </div>
+            <p>Massimo Vlacancich</p>
+          </div>
+     </div>
+</div>
